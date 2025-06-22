@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "../../schemas/auth";
 import { useState } from "react";
-import type { FormData } from "../../types";
+import type { FormDataRegister } from "../../types";
 
 export const RegisterPage = () => {
   const {
@@ -21,7 +21,7 @@ export const RegisterPage = () => {
 
   const [error, setError] = useState<string | null>(null);
 
-  const handleRegisterSubmit = async (data: FormData) => {
+  const handleRegisterSubmit = async (data: FormDataRegister) => {
     try {
       const response = await fetch("http://localhost:8080/auth/register", {
         method: "POST",
