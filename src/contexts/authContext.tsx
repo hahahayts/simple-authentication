@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type {
   AuthContextType,
@@ -6,7 +6,7 @@ import type {
   FormDataLogin,
   User,
 } from "../types";
-import { loginAction } from "../actions/auth";
+import { loginAction, logoutFunction } from "../actions/auth";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -19,6 +19,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // TODO: Token management
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    isAlreadyLoggedIn();
+  }, []);
+
+  async function isAlreadyLoggedIn() {
+    return token && navigate("/home");
+  }
 
   const login = async (data: FormDataLogin) => {
     const result = await loginAction(data);
@@ -35,7 +43,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
   const logout = () => {
+    logoutFunction();
     setUser(null);
+    setToken("");
     setError(null);
   };
 

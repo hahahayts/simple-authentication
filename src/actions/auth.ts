@@ -31,3 +31,6 @@ export const loginAction = async (data: FormDataLogin) => {
 };
 
 // TODO: logout action
+export const logoutFunction = async () => {
+  
+};
